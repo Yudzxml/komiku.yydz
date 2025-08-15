@@ -44,7 +44,7 @@ body {
 /* Judul */
 h1 {
   text-align:center;
-  font-size:2.5rem;
+  font-size:2rem;
   margin-bottom:20px;
   color:#fff;
   text-shadow:2px 2px 10px rgba(0,0,0,0.5);
@@ -267,7 +267,7 @@ const params = new URLSearchParams(window.location.search);
 let genre = params.get('genre') || 'action';
 let page = parseInt(params.get('page')) || 1;
 
-titleGenre.innerText = `Genre: ${genre.charAt(0).toUpperCase() + genre.slice(1)} - Halaman ${page}`;
+titleGenre.innerText = `Baca Semua Komik ${genre.charAt(0).toUpperCase() + genre.slice(1)} di Sini!`;
 
 async function fetchGenreKomik() {
   container.innerHTML = '';
@@ -289,7 +289,7 @@ async function fetchGenreKomik() {
           <h2>${i+1}. ${item.title}</h2>
           <p><strong>Type:</strong> ${item.type}</p>
           <p><strong>Genre:</strong> ${item.genre}</p>
-          <p><strong>Chapter:</strong> ${item.chapter_awal} - ${item.chapter_terbaru}</p>
+          <p><strong>Chapter:</strong> ${item.chapter_terbaru}</p>
           <a href="detail.html?url=${encodeURIComponent(item.link)}" target="_blank">Baca Komik</a>
         </div>
       `;
