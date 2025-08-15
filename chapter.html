@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
+
+<!-- SEO Meta -->
+<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
+<meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
+<meta name="author" content="Yudzxml">
+
+<!-- Open Graph / Social Media Preview -->
+<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://komik.yydz.x-server.web.id">
+<meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" href="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png" type="image/x-icon">
+</head>
+<style>
+/* Reset & font */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(160deg, #1e3c72, #2a5298);
+  color: #f0f0f0;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Judul */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  letter-spacing: 1px;
+}
+h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #ffdd57;
+  margin-bottom: 15px;
+}
+
+/* Form pencarian sejajar */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+input[type="text"] {
+  flex: 1;
+  max-width: 400px;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+input[type="text"]::placeholder { color: #ddd; }
+input[type="text"]:focus {
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.4);
+}
+button {
+  padding: 14px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Info chapter */
+.info {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  background: rgba(0,0,0,0.2);
+  padding: 15px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* Chapter images full width */
+.chapter-images img {
+  width: 100%;
+  display: block;
+  margin: 0;
+  border-radius: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: zoom-in;
+}
+.chapter-images img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  color: #fff;
+  margin: 20px 0;
+  font-size: 18px;
+  display: none;
+}
+
+/* Genre buttons */
+.genre-buttons {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.genre-buttons button {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
+}
+.genre-buttons button:hover {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+/* Error message */
+.error {
+  text-align: center;
+  color: #ff4b2b;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 25px 20px;
+  margin-top: 50px;
+  color: #ddd;
+  font-size: 14px;
+  background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+}
+.footer a {
+  color: #ff416c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  font-size: 20px;
+}
+.footer a:hover {
+  color: #ff4b2b;
+  transform: scale(1.2);
+}
+.footer p {
+  margin: 5px 0;
+}
+.footer a i { vertical-align: middle; }
+
+/* Responsif */
+@media(max-width: 768px) {
+  input[type="text"] { width: 80%; }
+}
+</style>
+<body>
+
+<div class="container">
+<h1 style="text-align: center;">
+  <img 
+    src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" 
+    alt="Logo KOMIK.YYDZ" 
+    style="display: block; margin: 0 auto; width: 200px; height: auto;"
+  >
+  KOMIK.YYDZ
+</h1>
+  <form id="searchForm">
+    <input type="text" id="query" placeholder="Masukkan nama komik..." required>
+    <button type="submit">Cari</button>
+  </form>
+
+  <h1 id="mangaTitle">Loading...</h1>
+  <div class="info" id="chapterInfo"></div>
+  <div class="chapter-images" id="chapterImages"></div>
+  <div class="loading" id="loading">Memuat halaman berikutnya...</div>
+</div>
+
+<div class="genre-buttons" id="genreButtons"></div>
+
+<footer class="footer">
+  <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
+  <p>
+    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+  </p>
+  <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
+</footer>
+
+<script>
+const genreButtonsContainer = document.getElementById('genreButtons');
+const params = new URLSearchParams(window.location.search);
+const initialChapterUrl = params.get('url');
+const mangaTitleEl = document.getElementById('mangaTitle');
+const chapterInfoEl = document.getElementById('chapterInfo');
+const chapterImagesEl = document.getElementById('chapterImages');
+const loadingEl = document.getElementById('loading');
+const searchForm = document.getElementById('searchForm');
+
+let chapterList = [];
+let currentChapterIndex = 0;
+let loadingChapter = false;
+
+// Lazy-load gambar
+const lazyObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const img = entry.target;
+      img.src = img.dataset.src;
+      observer.unobserve(img);
+    }
+  });
+},{rootMargin:'200px'});
+
+// Search Form
+searchForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const query = document.getElementById('query').value.trim();
+  if(query) window.location.href = `search.html?query=${encodeURIComponent(query)}`;
+});
+
+// Genre Buttons
+const genres = [
+  "action","adult","adventure","comedy","cooking","crime","demons",
+  "drama","ecchi","fantasy","game","gender-bender","ghosts","gore",
+  "harem","historical","horror","isekai","josei","magic","manga",
+  "martial-arts","mature","mecha","medical","military","monsters",
+  "music","mystery","one-shot","police","psychological",
+  "reincarnation","romance","school","school-life","sci-fi","seinen",
+  "shoujo","shoujo-ai","shounen","shounen-ai","slice-of-life","sport",
+  "sports","super-power","supernatural","thriller","tragedy",
+  "villainess","yuri"
+];
+genres.forEach(g => {
+  const btn = document.createElement('button');
+  btn.textContent = g.charAt(0).toUpperCase()+g.slice(1);
+  btn.addEventListener('click', () => window.location.href=`genre.html?genre=${encodeURIComponent(g)}&page=1`);
+  genreButtonsContainer.appendChild(btn);
+});
+
+// IntersectionObserver untuk load chapter berikutnya otomatis
+function observeLastImage(img){
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting && !loadingChapter){
+        observer.unobserve(img);
+        if(currentChapterIndex < chapterList.length-1){
+          currentChapterIndex++;
+          fetchChapter(chapterList[currentChapterIndex].link);
+        }
+      }
+    });
+  },{rootMargin:'300px', threshold:0.1});
+  observer.observe(img);
+}
+
+// Load chapter
+async function fetchChapter(url){
+  if(!url || loadingChapter) return;
+  loadingChapter = true;
+  loadingEl.style.display='block';
+
+  try {
+    const res = await fetch(`https://api-yudzxzy.vercel.app/api/search/komiku?action=chapter&url=${encodeURIComponent(url)}`);
+    const data = await res.json();
+
+    if(data.status && data.data){
+      const chapter = data.data;
+      if(currentChapterIndex===0 && mangaTitleEl.innerText==='Loading...') mangaTitleEl.innerText = chapter.manga_title;
+
+      chapterInfoEl.innerHTML=`
+        <h2>Chapter: ${chapter.chapter_title}</h2>
+        <p>Rilis: ${chapter.release_date}</p>
+        <p>Cara baca: ${chapter.reading_direction}</p>
+        <p>Total halaman: ${chapter.images.length}</p>
+      `;
+
+      chapter.images.forEach(imgSrc=>{
+        const img = document.createElement('img');
+        img.dataset.src = imgSrc;
+        img.loading='lazy';
+        chapterImagesEl.appendChild(img);
+        lazyObserver.observe(img);
+      });
+
+      const lastImg = chapterImagesEl.lastElementChild;
+      if(lastImg) observeLastImage(lastImg);
+    } else {
+      console.warn('❌ Gagal memuat chapter.');
+    }
+
+  } catch(err){
+    console.error('⚠️ Terjadi kesalahan saat fetch chapter:', err);
+  } finally {
+    loadingEl.style.display='none';
+    loadingChapter=false;
+  }
+}
+
+// Inisialisasi
+async function init(){
+  if(!initialChapterUrl){
+    mangaTitleEl.innerText='❌ URL chapter tidak ditemukan.';
+    return;
+  }
+
+  const storedChapters = sessionStorage.getItem('chapterList');
+  if(storedChapters){
+    chapterList = JSON.parse(storedChapters);
+    currentChapterIndex = chapterList.findIndex(ch=>ch.link===initialChapterUrl);
+    if(currentChapterIndex===-1) currentChapterIndex=0;
+    fetchChapter(initialChapterUrl);
+    return;
+  }
+
+  try{
+    const detailRes = await fetch(`https://api-yudzxzy.vercel.app/api/search/komiku?action=detail&url=${encodeURIComponent(initialChapterUrl)}`);
+    const detailData = await detailRes.json();
+    if(detailData.status && detailData.data){
+      chapterList = detailData.data.chapters;
+      sessionStorage.setItem('chapterList', JSON.stringify(chapterList));
+      currentChapterIndex = chapterList.findIndex(ch=>ch.link===initialChapterUrl);
+      if(currentChapterIndex===-1) currentChapterIndex=0;
+      fetchChapter(initialChapterUrl);
+    } else mangaTitleEl.innerText='❌ Data chapter tidak ditemukan.';
+  } catch(err){
+    console.error(err);
+    mangaTitleEl.innerText='⚠️ Terjadi kesalahan saat mengambil data.';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

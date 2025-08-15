@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
+
+<!-- SEO Meta -->
+<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
+<meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
+<meta name="author" content="Yudzxml">
+
+<!-- Open Graph / Social Media Preview -->
+<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://komik.yydz.x-server.web.id">
+<meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" href="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png" type="image/x-icon">
+</head>
+<style>
+/* Reset & font */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(160deg, #1e3c72, #2a5298);
+  color: #f0f0f0;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Judul */
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  letter-spacing: 1px;
+}
+
+/* Form pencarian sejajar */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+input[type="text"] {
+  flex: 1;        
+  max-width: 400px;
+}
+
+/* Tombol */
+button {
+  padding: 14px 25px;
+  font-size: 16px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+input[type="text"] {
+  width: 60%;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+input[type="text"]::placeholder { color: #ddd; }
+input[type="text"]:focus {
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.4);
+}
+
+.description {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  font-weight: 400;
+}
+
+/* Tombol utama */
+button {
+  padding: 14px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-left: 10px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Genre buttons */
+.genre-buttons {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.genre-buttons button {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
+}
+.genre-buttons button:hover {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+/* Container komik */
+.komik-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* Card komik */
+.komik-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.komik-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Gambar komik */
+.komik-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  transition: transform 0.3s;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+.komik-card img:hover {
+  transform: scale(1.08);
+}
+
+/* Info komik */
+.komik-card .info {
+  padding: 20px;
+}
+.komik-card .info h2 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+.komik-card .info p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 4px 0;
+}
+.komik-card .info a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+.komik-card .info a:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Error message */
+.error {
+  text-align: center;
+  color: #ff4b2b;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.footer {
+  text-align: center;
+  padding: 25px 20px;
+  margin-top: 50px;
+  color: #ddd;
+  font-size: 14px;
+  background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+}
+
+.footer a {
+  color: #ff416c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.footer a:hover {
+  color: #ff4b2b;
+  transform: scale(1.2);
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a i {
+  vertical-align: middle;
+}
+
+/* Responsif */
+@media(max-width: 768px) {
+  input[type="text"] { width: 80%; }
+}
+</style>
+<h1 style="text-align: center;">
+  <img 
+    src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" 
+    alt="Logo KOMIK.YYDZ" 
+    style="display: block; margin: 0 auto; width: 200px; height: auto;"
+  >
+  KOMIK.YYDZ
+</h1>
+<!-- Deskripsi singkat -->
+<p class="description">
+  Temukan komik terbaru dari berbagai genre favoritmu! Mulai dari aksi mendebarkan, romansa manis, hingga petualangan fantasi. Gunakan kotak pencarian untuk menemukan judul komik yang kamu sukai, atau pilih genre untuk menjelajahi koleksi lengkap.
+</p>
+
+<form id="searchForm">
+  <input type="text" id="query" placeholder="Masukkan nama komik..." required>
+  <button type="submit">Cari</button>
+</form>
+
+<div id="komik" class="komik-container"></div>
+<div id="errorMsg" class="error"></div>
+<div class="genre-buttons" id="genreButtons"></div>
+<!-- Footer Copyright -->
+<footer class="footer">
+  <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
+  <p>
+    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram">
+      <i class="fab fa-telegram-plane"></i>
+    </a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </p>
+  <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
+</footer>
+<script>
+const form = document.getElementById('searchForm');
+const container = document.getElementById('komik');
+const errorMsg = document.getElementById('errorMsg');
+const genreButtonsContainer = document.getElementById('genreButtons');
+
+const genres = [
+    "action", "adult", "adventure", "comedy", "cooking", "crime", "demons",
+    "drama", "ecchi", "fantasy", "game", "gender-bender", "ghosts", "gore",
+    "harem", "historical", "horror", "isekai", "josei", "magic", "manga",
+    "martial-arts", "mature", "mecha", "medical", "military", "monsters",
+    "music", "mystery", "one-shot", "police", "psychological",
+    "reincarnation", "romance", "school", "school-life", "sci-fi", "seinen",
+    "shoujo", "shoujo-ai", "shounen", "shounen-ai", "slice-of-life", "sport",
+    "sports", "super-power", "supernatural", "thriller", "tragedy",
+    "villainess", "yuri"
+];
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const query = document.getElementById('query').value.trim();
+  if (!query) { errorMsg.innerText = "❌ Masukkan kata kunci pencarian."; return; }
+  window.location.href = `search.html?query=${encodeURIComponent(query)}`;
+});
+
+genres.forEach(g => {
+  const btn = document.createElement('button');
+  btn.innerText = g.charAt(0).toUpperCase() + g.slice(1);
+  btn.addEventListener('click', () => {
+    window.location.href = `genre.html?genre=${encodeURIComponent(g)}&page=1`;
+  });
+  genreButtonsContainer.appendChild(btn);
+});
+
+async function fetchKomikTerbaru() {
+  try {
+    const response = await fetch('https://api-yudzxzy.vercel.app/api/search/komiku?action=latest');
+    const data = await response.json();
+
+    if (data.status === 200 && Array.isArray(data.data) && data.data.length > 0) {
+      const results = data.data.slice(0, 10);
+      results.forEach((item,i) => {
+        const card = document.createElement('div');
+        card.className = 'komik-card';
+        card.innerHTML = `
+          <img src="${item.thumbnail}" alt="${item.title}">
+          <div class="info">
+            <h2>${i+1}. ${item.title}</h2>
+            <p><strong>Chapter:</strong> ${item.chapter}</p>
+            <p><strong>Release:</strong> ${item.release}</p>
+            <a href="detail.html?url=${encodeURIComponent(item.url)}" target="_blank">Baca Komik</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      container.innerHTML = "<p>Tidak ada data terbaru komik saat ini.</p>";
+    }
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "<p>⚠️ Terjadi kesalahan saat mengambil data komik. Silakan coba lagi nanti.</p>";
+  }
+}
+
+fetchKomikTerbaru();
+</script>
+</body>
+</html>
