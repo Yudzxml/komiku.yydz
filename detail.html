@@ -93,6 +93,28 @@ button:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
+.bookmark-container {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.bookmark-btn {
+  font-size: 22px;
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.bookmark-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
 /* Thumbnail */
 #image {
   width: 100%;
@@ -207,6 +229,42 @@ button:hover {
 .footer a:hover { color: #ff4b2b; transform: scale(1.2); }
 .footer p { margin: 5px 0; }
 
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(30, 60, 114, 0.95);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+  border-radius: 15px 15px 0 0;
+}
+
+.bottom-menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.bottom-menu a i {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.bottom-menu a:hover {
+  color: #ff416c;
+  transform: scale(1.1);
+}
+
 /* Responsif */
 @media(max-width: 768px) {
   input[type="text"] { width: 80%; }
@@ -230,6 +288,9 @@ button:hover {
   </form>
   <h1 id="title">Loading...</h1>
   <img id="image" src="" alt="Thumbnail">
+<div class="bookmark-container">
+  <button id="bookmarkBtn" class="bookmark-btn">★ Tambahkan ke Bookmark</button>
+</div>
   <div class="meta" id="meta"></div>
   <div class="synopsis" id="synopsis"></div>
 
@@ -259,6 +320,14 @@ button:hover {
     <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
   </footer>
 </div>
+
+<!-- Bottom Menu -->
+<nav class="bottom-menu">
+  <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
+  <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
+  <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
+  <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
+</nav>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -342,6 +411,42 @@ async function fetchDetail() {
     titleEl.innerText='⚠️ Terjadi kesalahan saat mengambil data.';
   }
 }
+
+const bookmarkBtn = document.getElementById('bookmarkBtn');
+const bookmarkKey = 'komikBookmarks';
+
+function updateBookmarkBtn() {
+  const bookmarks = JSON.parse(localStorage.getItem(bookmarkKey)) || [];
+  const exists = bookmarks.some(k => k.url === komikUrl);
+  if(exists){
+    bookmarkBtn.innerText = '★ Sudah di Bookmark';
+    bookmarkBtn.style.color = 'gold';
+  } else {
+    bookmarkBtn.innerText = '★ Tambahkan ke Bookmark';
+    bookmarkBtn.style.color = '#fff';
+  }
+}
+
+
+bookmarkBtn.addEventListener('click', () => {
+  let bookmarks = JSON.parse(localStorage.getItem(bookmarkKey)) || [];
+  const exists = bookmarks.some(k => k.url === komikUrl);
+
+  if(exists){
+    bookmarks = bookmarks.filter(k => k.url !== komikUrl);
+  } else {
+    bookmarks.push({
+      title: titleEl.innerText,
+      thumb: imageEl.src,
+      url: komikUrl,
+      date: Date.now()
+    });
+  }
+  localStorage.setItem(bookmarkKey, JSON.stringify(bookmarks));
+  updateBookmarkBtn();
+});
+
+updateBookmarkBtn();
 
 function renderChapters(list){
   chaptersContainer.querySelectorAll('.chapter-row').forEach(r=>r.remove());

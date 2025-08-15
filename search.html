@@ -220,6 +220,42 @@ button:hover {
 .footer p { margin: 5px 0; }
 .footer a i { vertical-align: middle; }
 
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(30, 60, 114, 0.95);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+  border-radius: 15px 15px 0 0;
+}
+
+.bottom-menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.bottom-menu a i {
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.bottom-menu a:hover {
+  color: #ff416c;
+  transform: scale(1.1);
+}
+
 /* Responsif */
 @media(max-width: 768px) {
   input[type="text"] { width: 80%; }
@@ -253,6 +289,14 @@ button:hover {
   </p>
   <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
 </footer>
+
+<!-- Bottom Menu -->
+<nav class="bottom-menu">
+  <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
+  <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
+  <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
+  <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
+</nav>
 
 <script>
 const container = document.getElementById('komik');

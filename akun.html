@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
+
+<!-- SEO Meta -->
+<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
+<meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
+<meta name="author" content="Yudzxml">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://komik.yydz.x-server.web.id">
+<meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" href="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png" type="image/x-icon">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<style>
+/* ===== Reset & Base ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+body { background: linear-gradient(160deg,#1e3c72,#2a5298); color:#f0f0f0; transition:all 0.3s ease; padding-bottom:120px; }
+
+/* Container utama */
+.container {
+  background: rgba(0,0,0,0.65);
+  padding: 30px 25px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  margin: 40px auto;
+  backdrop-filter: blur(10px);
+}
+.container h1 { margin-bottom: 25px; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); font-size:28px; }
+button {
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  padding:14px 22px; margin:12px auto; border:none; border-radius:50px;
+  cursor:pointer; font-size:16px; font-weight:600; width:85%;
+  transition:all 0.3s ease;
+  background:linear-gradient(135deg,#ff416c,#ff4b2b); color:#fff;
+  box-shadow:0 6px 20px rgba(0,0,0,0.35);
+}
+button:hover { transform: translateY(-3px) scale(1.05); box-shadow:0 12px 30px rgba(0,0,0,0.6); }
+#logoutBtn { background:linear-gradient(135deg,#ff416c,#ff4b2b); }
+#openHomeBtn { background:linear-gradient(135deg,#ffdd57,#ffb347); color:#000; }
+
+/* Info User Card */
+#userInfo {
+  margin-top: 25px;
+  width: 100%;
+  max-width: 400px;
+  background: rgba(0,0,0,0.65); /* Gelap solid untuk kontras teks */
+  padding: 25px 30px;
+  border-radius: 25px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(8px); /* efek glassmorphism */
+}
+
+#userInfo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.75);
+}
+
+#userInfo img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+#userInfo img:hover { transform: scale(1.1); }
+
+/* User Details */
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.user-details div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  flex-wrap: wrap; /* agar teks panjang tidak keluar card */
+}
+
+.user-details div i {
+  color: #ffdd57;
+  min-width: 22px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.user-details div span:first-child {
+  font-weight: 600;
+  color: #ffd700;
+}
+
+.user-details div span:last-child {
+  color: #fff;
+  font-weight: 400;
+  word-break: break-word; /* teks panjang tetap di dalam card */
+}
+
+.user-name strong {
+  font-size: 18px;
+  color: #fff;
+}
+
+/* Hover efek */
+.user-details div:hover span:last-child {
+  color: #ffeb99;
+  transition: 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  #userInfo {
+    padding: 20px;
+    gap: 15px;
+  }
+  #userInfo img {
+    width: 80px;
+    height: 80px;
+  }
+  .user-details div {
+    font-size: 14px;
+  }
+}
+
+/* Logo */
+.logo { display:block; margin:0 auto 25px auto; width:180px; height:auto; }
+
+/* Footer */
+.footer { text-align:center; padding:25px 20px; margin-top:50px; color:#ddd; font-size:14px; background: rgba(255,255,255,0.05); border-top:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px 15px 0 0; box-shadow:0 -5px 15px rgba(0,0,0,0.25); }
+.footer a { color:#ff416c; text-decoration:none; margin:0 10px; font-size:20px; transition:all 0.3s ease; }
+.footer a:hover { color:#ff4b2b; transform:scale(1.2); }
+.footer p { margin:5px 0; }
+
+/* Bottom menu */
+.bottom-menu { position:fixed; bottom:0; left:0; width:100%; background: rgba(30,60,114,0.95); display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(10px); z-index:1000; box-shadow:0 -5px 15px rgba(0,0,0,0.3); border-radius:15px 15px 0 0; }
+.bottom-menu a { text-decoration:none; color:#fff; font-size:14px; display:flex; flex-direction:column; align-items:center; transition:all 0.3s ease; }
+.bottom-menu a i { font-size:20px; margin-bottom:3px; }
+.bottom-menu a:hover { color:#ff416c; transform:scale(1.1); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" alt="Logo KOMIK.YYDZ" class="logo">
+  <h1>KOMIK.YYDZ</h1>
+  <button id="googleLoginBtn"><i class="fab fa-google"></i> Login dengan Google</button>
+
+  <div id="userInfo" style="display:none;">
+    <img src="" alt="Avatar">
+    <div class="user-details">
+      <div class="user-name"><strong></strong></div>
+      <div class="user-email"><i class="fas fa-envelope"></i> <span>Email:</span> <span></span></div>
+      <div class="user-uid"><i class="fas fa-id-badge"></i> <span>UID:</span> <span></span></div>
+      <div class="user-login"><i class="fas fa-clock"></i> <span>Login terakhir:</span> <span></span></div>
+    </div>
+  </div>
+
+  <button id="openHomeBtn" style="display:none;">Buka Komik Saya</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+</div>
+
+<footer class="footer">
+  <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
+  <p>
+    <a href="https://wa.me/6283872031397" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/Yudzxzy" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank"><i class="fas fa-envelope"></i></a>
+  </p>
+  <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
+</footer>
+
+<nav class="bottom-menu">
+  <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
+  <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
+  <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
+  <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
+</nav>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBPzquGkVE0weenABUs_uAwiApfZxzco8E",
+  authDomain: "komik-yydz.firebaseapp.com",
+  projectId: "komik-yydz",
+  storageBucket: "komik-yydz.firebasestorage.app",
+  messagingSenderId: "650701388645",
+  appId: "1:650701388645:web:19072d42dcc445bb757f8c"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Login Google
+const provider = new firebase.auth.GoogleAuthProvider();
+document.getElementById('googleLoginBtn').addEventListener('click', ()=>auth.signInWithPopup(provider).catch(err=>alert(err.message)));
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', ()=>auth.signOut());
+
+// Buka halaman utama
+document.getElementById('openHomeBtn').addEventListener('click', ()=>window.location.href='index.html');
+
+// Status login
+auth.onAuthStateChanged(user=>{
+  const userInfo = document.getElementById('userInfo');
+  const loginBtn = document.getElementById('googleLoginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const openHomeBtn = document.getElementById('openHomeBtn');
+
+  if(user){
+    loginBtn.style.display='none';
+    logoutBtn.style.display='block';
+    openHomeBtn.style.display='block';
+    userInfo.style.display='flex';
+    
+    const lastLogin = new Date().toLocaleString('id-ID');
+    userInfo.querySelector('img').src = user.photoURL;
+    userInfo.querySelector('.user-name strong').textContent = user.displayName;
+    userInfo.querySelector('.user-email span:last-child').textContent = user.email;
+    userInfo.querySelector('.user-uid span:last-child').textContent = user.uid;
+    userInfo.querySelector('.user-login span:last-child').textContent = lastLogin;
+  } else {
+    loginBtn.style.display='flex';
+    logoutBtn.style.display='none';
+    openHomeBtn.style.display='none';
+    userInfo.style.display='none';
+  }
+});
+</script>
+
+</body>
+</html>
