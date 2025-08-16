@@ -327,6 +327,143 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* Top Rank Slider */
+.toprank-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 12px 0;
+  scroll-behavior: smooth;
+  background: transparent; /* hilangkan glow */
+}
+.toprank-container::-webkit-scrollbar {
+  height: 6px;
+}
+.toprank-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+}
+.toprank-card {
+  flex: 0 0 auto;
+  width: 140px; /* lebih compact */
+  background: rgba(30, 60, 114, 0.7); /* semi-opaque solid, hilangkan biru glow */
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+.toprank-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+.toprank-card img {
+  width: 100%;
+  height: 170px; /* lebih kecil */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.toprank-card img:hover {
+  transform: scale(1.05);
+}
+.toprank-card .info {
+  padding: 6px;
+  text-align: center;
+}
+.toprank-card .info h3 {
+  font-size: 13px;
+  color: #fff;
+  margin: 3px 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.toprank-card .info p {
+  font-size: 11px;
+  color: #ccc;
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+/* Responsif */
+@media(max-width: 768px) {
+  .toprank-card { width: 110px; }
+  .toprank-card img { height: 140px; }
+}
+
+  /* Judul kategori */
+.category-title {
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 30px 0 15px 0;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  font-weight: 600;
+  padding-left: 10px;
+}
+
+/* Grid kategori */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 0 10px;
+}
+
+/* Card rekomendasi */
+.rekomendasi-card {
+  background: rgba(30, 60, 114, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.rekomendasi-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+/* Gambar komik */
+.rekomendasi-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.3s;
+}
+.rekomendasi-card img:hover {
+  transform: scale(1.05);
+}
+
+/* Info komik */
+.rekomendasi-card .info {
+  padding: 10px;
+  text-align: center;
+}
+.rekomendasi-card .info h3 {
+  font-size: 14px;
+  color: #fff;
+  margin: 5px 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.rekomendasi-card .info p {
+  font-size: 12px;
+  color: #ccc;
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+/* Responsif */
+@media(max-width: 768px) {
+  .rekomendasi-card { width: 100%; }
+  .rekomendasi-card img { height: 140px; }
+  .category-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+}
+
 /* Responsif */
 @media(max-width: 768px) {
   input[type="text"] { width: 80%; }
@@ -359,9 +496,18 @@ button:hover {
   <button onclick="goType('populer')">Populer</button>
   <button onclick="goType('daftar-komik')">Daftar Komik</button>
 </div>
+<header id="headerTitle">Top Rank Komik</header>
+<div id="topRank" class="toprank-container"></div>
+<header id="headerTitle">Manga Populer</header>
+<div id="mangaPopulerContainer" class="toprank-container"></div>
+<header id="headerTitle">Manhwa Populer</header>
+<div id="manhwaPopulerContainer" class="toprank-container"></div>
 <header id="headerTitle">Komik Terbaru</header>
 <div id="komik" class="komik-container"></div>
 <div id="errorMsg" class="error"></div>
+<header id="headerTitle">Rekomendasi Baca</header>
+<div id="rekomendasiContainer" class="rekomendasi-container"></div>
+<header id="headerTitle">List Genre</header>
 <div class="genre-buttons" id="genreButtons"></div>
 
 <!-- Footer Copyright -->
