@@ -241,21 +241,7 @@ button:hover {
   margin-top: 20px;
   font-size: 16px;
 }
-#headerTitle {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 30px auto 20px auto;
-  padding: 15px 30px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05); /* glass effect */
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
+
 .footer {
   text-align: center;
   padding: 25px 20px;
@@ -326,6 +312,21 @@ button:hover {
   color: #ff416c;
   transform: scale(1.1);
 }
+#headerTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 30px auto 20px auto;
+  padding: 15px 30px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05); /* glass effect */
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
 
 /* Responsif */
 @media(max-width: 768px) {
@@ -333,8 +334,8 @@ button:hover {
 }
 </style>
 </head>
-
-<h1 style="text-align: center;">
+<body>
+<h1>
   <img 
     src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" 
     alt="Logo KOMIK.YYDZ" 
@@ -342,51 +343,36 @@ button:hover {
   >
   KOMIK.YYDZ
 </h1>
-<!-- Deskripsi singkat -->
-<p class="description">
-  Temukan komik terbaru dari berbagai genre favoritmu! Mulai dari aksi mendebarkan, romansa manis, hingga petualangan fantasi. Gunakan kotak pencarian untuk menemukan judul komik yang kamu sukai, atau pilih genre untuk menjelajahi koleksi lengkap.
-</p>
 
 <form id="searchForm">
   <input type="text" id="query" placeholder="Masukkan nama komik..." required>
   <button type="submit">Cari</button>
 </form>
-<!-- Tombol Manhwa, Manga, Manhua -->
-<div class="type-buttons" style="text-align:center; margin-bottom:30px;">
-  <button onclick="goType('manhwa')">Manhwa</button>
-  <button onclick="goType('manga')">Manga</button>
-  <button onclick="goType('manhua')">Manhua</button>
-  <button onclick="goType('populer')">Populer</button>
-  <button onclick="goType('daftar-komik')">Daftar Komik</button>
-</div>
-<header id="headerTitle">Komik Terbaru</header>
-<div id="komik" class="komik-container"></div>
-<div id="errorMsg" class="error"></div>
-<div class="genre-buttons" id="genreButtons"></div>
 
-<!-- Footer Copyright -->
+<header id="headerTitle">Daftar Komik</header>
+
+<div class="komik-container" id="comicList">
+  <p class="error" style="grid-column:1/-1;">Memuat data...</p>
+</div>
+
 <footer class="footer">
   <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
   <p>
-    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp">
-      <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram">
-      <i class="fab fa-telegram-plane"></i>
-    </a>
-    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email">
-      <i class="fas fa-envelope"></i>
-    </a>
+    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
   </p>
   <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
 </footer>
-<!-- Bottom Menu -->
+
 <nav class="bottom-menu">
   <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
   <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
   <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
   <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
 </nav>
-<script src="index.js"></script>
+
+<script src="tipe.js"></script>
+
 </body>
 </html>

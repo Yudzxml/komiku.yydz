@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
+<title>KOMIK.YYDZ - Komik Populer</title>
 
 <!-- SEO Meta -->
-<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
-<meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
+<meta name="description" content="KOMIK.YYDZ - Platform membaca komik populer dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta name="keywords" content="komik populer, manga populer, manhwa populer, baca komik online, komik terbaru">
 <meta name="author" content="Yudzxml">
 
 <!-- Open Graph / Social Media Preview -->
-<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
-<meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta property="og:title" content="KOMIK.YYDZ - Komik Populer">
+<meta property="og:description" content="Platform membaca komik populer dari berbagai genre. Temukan komik favoritmu sekarang!">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://komik.yydz.x-server.web.id">
+<meta property="og:url" content="https://komik.yydz.x-server.web.id/populer.html">
 <meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
-<meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
+<meta name="twitter:title" content="KOMIK.YYDZ - Komik Populer">
+<meta name="twitter:description" content="Platform membaca komik populer dari berbagai genre. Temukan komik favoritmu sekarang!">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
 
 <!-- Fonts & Icons -->
@@ -29,6 +29,7 @@
 
 <!-- Favicon -->
 <link rel="icon" href="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png" type="image/x-icon">
+
 <style>
 /* Reset & font */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -241,21 +242,7 @@ button:hover {
   margin-top: 20px;
   font-size: 16px;
 }
-#headerTitle {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 30px auto 20px auto;
-  padding: 15px 30px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05); /* glass effect */
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
+
 .footer {
   text-align: center;
   padding: 25px 20px;
@@ -326,7 +313,58 @@ button:hover {
   color: #ff416c;
   transform: scale(1.1);
 }
+/* Pagination */
+#pagination {
+  margin-top: 30px;
+  text-align: center;
+}
 
+#pagination button {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  margin: 0 10px;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#pagination button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+#pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#currentPage {
+  color: #fff;
+  font-weight: 600;
+  margin: 0 10px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+#headerTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 30px auto 20px auto;
+  padding: 15px 30px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05); /* glass effect */
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
 /* Responsif */
 @media(max-width: 768px) {
   input[type="text"] { width: 80%; }
@@ -334,59 +372,41 @@ button:hover {
 </style>
 </head>
 
+<body>
 <h1 style="text-align: center;">
-  <img 
-    src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" 
-    alt="Logo KOMIK.YYDZ" 
-    style="display: block; margin: 0 auto; width: 200px; height: auto;"
-  >
+  <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" alt="Logo KOMIK.YYDZ" style="display: block; margin: 0 auto; width: 200px; height: auto;">
   KOMIK.YYDZ
 </h1>
-<!-- Deskripsi singkat -->
-<p class="description">
-  Temukan komik terbaru dari berbagai genre favoritmu! Mulai dari aksi mendebarkan, romansa manis, hingga petualangan fantasi. Gunakan kotak pencarian untuk menemukan judul komik yang kamu sukai, atau pilih genre untuk menjelajahi koleksi lengkap.
-</p>
-
 <form id="searchForm">
   <input type="text" id="query" placeholder="Masukkan nama komik..." required>
   <button type="submit">Cari</button>
 </form>
-<!-- Tombol Manhwa, Manga, Manhua -->
-<div class="type-buttons" style="text-align:center; margin-bottom:30px;">
-  <button onclick="goType('manhwa')">Manhwa</button>
-  <button onclick="goType('manga')">Manga</button>
-  <button onclick="goType('manhua')">Manhua</button>
-  <button onclick="goType('populer')">Populer</button>
-  <button onclick="goType('daftar-komik')">Daftar Komik</button>
-</div>
-<header id="headerTitle">Komik Terbaru</header>
+<header id="headerTitle">Komik Populer</header>
 <div id="komik" class="komik-container"></div>
+<div id="pagination" style="text-align:center; margin-top:20px;">
+  <button id="prevPage">Prev</button>
+  <span id="currentPage"></span>
+  <button id="nextPage">Next</button>
+</div>
 <div id="errorMsg" class="error"></div>
-<div class="genre-buttons" id="genreButtons"></div>
 
-<!-- Footer Copyright -->
 <footer class="footer">
   <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
   <p>
-    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp">
-      <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram">
-      <i class="fab fa-telegram-plane"></i>
-    </a>
-    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email">
-      <i class="fas fa-envelope"></i>
-    </a>
+    <a href="https://wa.me/6283872031397" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/Yudzxzy" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
   </p>
   <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
 </footer>
-<!-- Bottom Menu -->
+
 <nav class="bottom-menu">
   <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
   <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
   <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
   <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
 </nav>
-<script src="index.js"></script>
+
+<script src="populer.js"></script>
 </body>
 </html>
