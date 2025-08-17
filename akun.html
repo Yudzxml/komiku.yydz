@@ -3,23 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
-
-<!-- SEO Meta -->
-<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
-<meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
-<meta name="author" content="Yudzxml">
-
-<!-- Open Graph / Twitter -->
-<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
-<meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://komik.yydz.x-server.web.id">
-<meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
-<meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
+<title>KOMIKU.YYDZ - Akun Saya</title>
 
 <!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -31,163 +15,199 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <style>
-/* ===== Reset & Base ===== */
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
-body { background: linear-gradient(160deg,#1e3c72,#2a5298); color:#f0f0f0; transition:all 0.3s ease; padding-bottom:120px; }
-
-/* Container utama */
-.container {
-  background: rgba(0,0,0,0.65);
-  padding: 30px 25px;
-  border-radius: 25px;
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-  margin: 40px auto;
-  backdrop-filter: blur(10px);
-}
-.container h1 { margin-bottom: 25px; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); font-size:28px; }
-button {
-  display:flex; align-items:center; justify-content:center; gap:12px;
-  padding:14px 22px; margin:12px auto; border:none; border-radius:50px;
-  cursor:pointer; font-size:16px; font-weight:600; width:85%;
-  transition:all 0.3s ease;
-  background:linear-gradient(135deg,#ff416c,#ff4b2b); color:#fff;
-  box-shadow:0 6px 20px rgba(0,0,0,0.35);
-}
-button:hover { transform: translateY(-3px) scale(1.05); box-shadow:0 12px 30px rgba(0,0,0,0.6); }
-#logoutBtn { background:linear-gradient(135deg,#ff416c,#ff4b2b); }
-#openHomeBtn { background:linear-gradient(135deg,#ffdd57,#ffb347); color:#000; }
-
-/* Info User Card */
-#userInfo {
-  margin-top: 25px;
-  width: 100%;
-  max-width: 400px;
-  background: rgba(0,0,0,0.65); /* Gelap solid untuk kontras teks */
-  padding: 25px 30px;
-  border-radius: 25px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+/* === CSS sama seperti sebelumnya === */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; transition: all 0.3s ease; }
+body { background: linear-gradient(160deg,#1e3c72,#2a5298); color:#f0f0f0; padding-bottom:140px; }
+.container { background: rgba(255,255,255,0.05); padding: 35px 30px; border-radius: 25px; width: 100%; max-width: 420px; text-align: center; margin: 50px auto; box-shadow: 0 20px 40px rgba(0,0,0,0.6); backdrop-filter: blur(15px);}
+.container h1 { margin-bottom: 25px; font-size: 30px; text-shadow: 2px 2px 15px rgba(0,0,0,0.5);}
+button { display:flex; align-items:center; justify-content:center; gap:10px; padding:14px 24px; margin:12px auto; border:none; border-radius:50px; cursor:pointer; font-size:16px; font-weight:600; width:90%; background: linear-gradient(135deg,#ff416c,#ff4b2b); color:#fff; box-shadow:0 8px 25px rgba(0,0,0,0.4); transition: all 0.4s ease;}
+button:hover { transform: translateY(-4px) scale(1.05); box-shadow:0 14px 35px rgba(0,0,0,0.55);}
+#openHomeBtn { background: linear-gradient(135deg,#ffdd57,#ffb347); color:#000;}
+#userInfo { margin-top:25px; width:100%; max-width:400px; background: rgba(255,255,255,0.1); padding:30px 25px; border-radius:25px; display:flex; flex-direction:column; align-items:center; gap:20px; box-shadow:0 15px 45px rgba(0,0,0,0.6); backdrop-filter: blur(12px);}
+#userInfo:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(0,0,0,0.75);}
+#userInfo img { width:100px; height:100px; border-radius:50%; border:2px solid #fff; object-fit:cover; transition: all 0.3s ease;}
+#userInfo img:hover { transform: scale(1.15); filter: brightness(1.2);}
+.user-details { display:flex; flex-direction:column; gap:12px; width:100%; text-align:center;}
+.user-details div { display:flex; justify-content:center; align-items:center; gap:8px; font-size:15px; flex-wrap:wrap;}
+.user-details div i { color:#ffdd57; font-size:16px; min-width:22px; text-align:center;}
+.user-details div span.label { font-weight:600; color:#ffd700;}
+.user-details div span.value { color:#fff; word-break:break-word;}
+.user-name strong { font-size:19px; color:#fff; text-shadow: 1px 1px 5px rgba(0,0,0,0.4);}
+.user-details div:hover span.value { color:#ffeb99;}
+.user-actions {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  backdrop-filter: blur(8px); /* efek glassmorphism */
-}
-
-#userInfo:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 45px rgba(0,0,0,0.75);
-}
-
-#userInfo img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-#userInfo img:hover { transform: scale(1.1); }
-
-/* User Details */
-.user-details {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding: 0 10px;
-  text-align: center;
-}
-
-.user-details div {
-  display: flex;
+  flex-direction: column; /* vertikal */
+  gap: 12px; /* jarak antar elemen lebih lega */
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.user-actions input[type=text],
+.user-actions input[type=file] {
+  width: 100%; /* full width responsif */
+  max-width: 300px; /* batas maksimum */
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: none;
   font-size: 15px;
-  flex-wrap: wrap; /* agar teks panjang tidak keluar card */
-}
-
-.user-details div i {
-  color: #ffdd57;
-  min-width: 22px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
   text-align: center;
-  font-size: 16px;
 }
 
-.user-details div span:first-child {
+.user-actions input[type=text]:focus,
+.user-actions input[type=file]:focus {
+  outline: none;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 0 8px rgba(91,134,229,0.6);
+}
+
+.user-actions input::placeholder {
+  color: #eee;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.user-actions button {
+  padding: 10px 18px;
+  border-radius: 16px;
+  font-size: 15px;
   font-weight: 600;
-  color: #ffd700;
-}
-
-.user-details div span:last-child {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
   color: #fff;
-  font-weight: 400;
-  word-break: break-word; /* teks panjang tetap di dalam card */
+  border: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  width: 100%;
+  max-width: 300px;
 }
 
-.user-name strong {
-  font-size: 18px;
-  color: #fff;
+.user-actions button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  background: linear-gradient(135deg, #5b86e5, #36d1dc);
+}
+.logo { display:block; margin:0 auto 25px auto; width:180px; height:auto;}
+
+.footer {
+  text-align: center;
+  padding: 25px 20px;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #ddd;
+  font-size: 14px;
+  background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
 }
 
-/* Hover efek */
-.user-details div:hover span:last-child {
-  color: #ffeb99;
-  transition: 0.3s;
+.footer a {
+  color: #ff416c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  font-size: 20px;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-  #userInfo {
-    padding: 20px;
-    gap: 15px;
-  }
-  #userInfo img {
-    width: 80px;
-    height: 80px;
-  }
-  .user-details div {
-    font-size: 14px;
-  }
+.footer a:hover {
+  color: #ff4b2b;
+  transform: scale(1.2);
 }
 
-/* Logo */
-.logo { display:block; margin:0 auto 25px auto; width:180px; height:auto; }
+.footer p {
+  margin: 5px 0;
+}
 
-/* Footer */
-.footer { text-align:center; padding:25px 20px; margin-top:50px; color:#ddd; font-size:14px; background: rgba(255,255,255,0.05); border-top:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(10px); border-radius:15px 15px 0 0; box-shadow:0 -5px 15px rgba(0,0,0,0.25); }
-.footer a { color:#ff416c; text-decoration:none; margin:0 10px; font-size:20px; transition:all 0.3s ease; }
-.footer a:hover { color:#ff4b2b; transform:scale(1.2); }
-.footer p { margin:5px 0; }
+.footer a i {
+  vertical-align: middle;
+}
+.bottom-menu { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 95%; max-width: 480px; background: rgba(30, 60, 114, 0.95); display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.35); border-radius: 20px 20px 10px 10px; }  
+.bottom-menu a { text-decoration: none; color: #fff; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: all 0.3s ease; }  
+.bottom-menu a i { font-size: 18px; }  
+.bottom-menu a:hover { color: #ff416c; transform: translateY(-2px) scale(1.05); }  
+@media(max-width:480px){ .container { padding:25px 20px; margin:30px auto; } #userInfo img { width:85px; height:85px; } .user-actions { flex-direction:column; gap:8px; } .user-actions input, .user-actions button { width:80%; } }
+.modal-spinner {
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  flex-direction: column;
+  color:#fff;
+  font-family:'Poppins', sans-serif;
+  text-align:center;
+}
 
-/* Bottom menu */
-.bottom-menu { position:fixed; bottom:0; left:0; width:100%; background: rgba(30,60,114,0.95); display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(10px); z-index:1000; box-shadow:0 -5px 15px rgba(0,0,0,0.3); border-radius:15px 15px 0 0; }
-.bottom-menu a { text-decoration:none; color:#fff; font-size:14px; display:flex; flex-direction:column; align-items:center; transition:all 0.3s ease; }
-.bottom-menu a i { font-size:20px; margin-bottom:3px; }
-.bottom-menu a:hover { color:#ff416c; transform:scale(1.1); }
+.modal-spinner .spinner-content {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap:15px;
+  padding:20px 30px;
+  background: rgba(255,255,255,0.05);
+  border-radius:20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+}
+
+.modal-spinner button {
+  padding:8px 20px;
+  border:none;
+  border-radius:12px;
+  font-size:14px;
+  background: linear-gradient(135deg,#ff416c,#ff4b2b);
+  color:#fff;
+  cursor:pointer;
+}
+.modal-spinner button:hover {
+  transform: scale(1.05);
+}
 </style>
 </head>
 <body>
-
+<!-- Modal Loading -->
+<div id="modalSpinner" class="modal-spinner" style="display:none;">
+  <div class="spinner-content">
+    <i class="fas fa-spinner fa-pulse fa-3x"></i>
+    <p id="spinnerMessage">Memproses...</p>
+    <button id="closeSpinnerBtn" style="display:none;">Tutup</button>
+  </div>
+</div>
 <div class="container">
-  <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" alt="Logo KOMIK.YYDZ" class="logo">
-  <h1>KOMIK.YYDZ</h1>
+  <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" alt="Logo KOMIKU.YYDZ" class="logo">
+  <h1>KOMIKU.YYDZ</h1>
   <button id="googleLoginBtn"><i class="fab fa-google"></i> Login dengan Google</button>
 
   <div id="userInfo" style="display:none;">
     <img src="" alt="Avatar">
     <div class="user-details">
       <div class="user-name"><strong></strong></div>
-      <div class="user-email"><i class="fas fa-envelope"></i> <span>Email:</span> <span></span></div>
-      <div class="user-uid"><i class="fas fa-id-badge"></i> <span>UID:</span> <span></span></div>
-      <div class="user-login"><i class="fas fa-clock"></i> <span>Login terakhir:</span> <span></span></div>
+      <div class="user-email"><i class="fas fa-envelope"></i> <span class="label">Email:</span> <span class="value email-value"></span></div>
+      <div class="user-role"><i class="fas fa-user-shield"></i> <span class="label">Status:</span> <span class="value role-value"></span></div>
+      <div class="user-uid"><i class="fas fa-id-badge"></i> <span class="label">UID:</span> <span class="value uid-value"></span></div>
+      <div class="user-login"><i class="fas fa-clock"></i> <span class="label">Login terakhir:</span> <span class="value lastlogin-value"></span></div>
     </div>
+
+<div class="user-actions">
+  <input type="text" id="editName" placeholder="Ganti Nama">
+  <input type="file" id="editPhoto" accept="image/*">
+  <button id="saveProfile">Simpan</button>
+</div>
   </div>
 
   <button id="openHomeBtn" style="display:none;">Buka Komik Saya</button>
@@ -195,22 +215,28 @@ button:hover { transform: translateY(-3px) scale(1.05); box-shadow:0 12px 30px r
 </div>
 
 <footer class="footer">
-  <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
+  <p>© 2025 <strong>KOMIKU.YYDZ</strong>. Semua hak cipta dilindungi.</p>
   <p>
     <a href="https://wa.me/6283872031397" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://t.me/Yudzxzy" target="_blank"><i class="fab fa-telegram-plane"></i></a>
     <a href="mailto:yudaaryaardhana1122@email.com" target="_blank"><i class="fas fa-envelope"></i></a>
   </p>
-  <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
+<p style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;">
+  Desain & Pengembangan oleh Tim
+  <span style="color:#ff416c; font-weight:600;">Yudzxml</span>
+</p>
 </footer>
-
+</div>
+<!-- Bottom Menu -->
 <nav class="bottom-menu">
   <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
   <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
   <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
+  <a href="live-chat.html" title="Cari"><i class="fas fa-comments"></i><span>Live Chat</span></a>
   <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="akun.js"></script>
 
 </body>

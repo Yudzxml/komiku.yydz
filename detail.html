@@ -4,23 +4,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KOMIK.YYDZ - Baca Komik Online Terbaru</title>
+<title>KOMIKU.YYDZ - Baca Komik Online Terbaru</title>
 
 <!-- SEO Meta -->
-<meta name="description" content="KOMIK.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
+<meta name="description" content="KOMIKU.YYDZ - Platform membaca komik online terbaru dan lengkap dari berbagai genre seperti Action, Romance, Fantasy, Horror, dan banyak lagi.">
 <meta name="keywords" content="komik, manga, baca komik online, komik action, komik romance, komik fantasy, komik terbaru">
 <meta name="author" content="Yudzxml">
 
 <!-- Open Graph / Social Media Preview -->
-<meta property="og:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta property="og:title" content="KOMIKU.YYDZ - Baca Komik Online Terbaru">
 <meta property="og:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://komik.yydz.x-server.web.id">
+<meta property="og:url" content="https://KOMIKU.YYDZ.x-server.web.id">
 <meta property="og:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="KOMIK.YYDZ - Baca Komik Online Terbaru">
+<meta name="twitter:title" content="KOMIKU.YYDZ - Baca Komik Online Terbaru">
 <meta name="twitter:description" content="Platform membaca komik online terbaru dan lengkap dari berbagai genre. Temukan komik favoritmu sekarang!">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png">
 
@@ -30,193 +30,222 @@
 
 <!-- Favicon -->
 <link rel="icon" href="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png" type="image/x-icon">
-</head>
+
 <style>
-/* Reset & Font */
+/* ===== Reset & Font ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(160deg, #1e3c72, #2a5298);
-  color: #f0f0f0;
-  padding: 20px;
-  transition: all 0.3s ease;
-}
+body { font-family: 'Poppins', sans-serif; background: linear-gradient(160deg, #1e3c72, #2a5298); color: #f0f0f0; padding: 20px; transition: all 0.3s ease; }
+body.light-mode { background: #f5f5f5; color: #222; }
+h1 { text-align: center; font-size: 3rem; margin-bottom: 30px; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); letter-spacing: 1px; }
+body.light-mode h1 { color: #222; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
 
-/* Judul */
-h1 {
-  text-align: center;
-  font-size: 3rem;
-  margin-bottom: 30px;
-  color: #fff;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-  letter-spacing: 1px;
-}
-
-/* Form pencarian */
-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-input[type="text"] {
-  flex: 1;
-  max-width: 400px;
-  padding: 14px 20px;
-  font-size: 16px;
-  border-radius: 50px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-  backdrop-filter: blur(8px);
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
+/* ===== Form Pencarian ===== */
+form { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
+input[type="text"] { flex: 1; max-width: 400px; padding: 14px 20px; font-size: 16px; border-radius: 50px; border: none; outline: none; background: rgba(255,255,255,0.15); color: #fff; backdrop-filter: blur(8px); box-shadow: inset 0 0 10px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+body.light-mode input[type="text"] { background: rgba(0,0,0,0.05); color: #222; }
 input[type="text"]::placeholder { color: #ddd; }
 input[type="text"]:focus { box-shadow: inset 0 0 15px rgba(255,255,255,0.4); }
-button {
-  padding: 14px 25px;
-  font-size: 16px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  color: #fff;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-button:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-}
+button { padding: 14px 25px; font-size: 16px; border-radius: 50px; border: none; cursor: pointer; background: linear-gradient(135deg, #ff416c, #ff4b2b); color: #fff; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+button:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
 
+/* ===== Bookmark ===== */
 .bookmark-container {
   text-align: center;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 .bookmark-btn {
-  font-size: 22px;
-  padding: 10px 25px;
-  border-radius: 50px;
+  font-size: 16px;          /* lebih kecil */
+  padding: 6px 15px;        /* lebih ramping */
+  border-radius: 25px;      /* proporsional dengan ukuran kecil */
   border: none;
   cursor: pointer;
   background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: #fff;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  position: relative;
 }
 
-.bookmark-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+.bookmark-btn::after {
+  content: "";
+  position: absolute;
+  width: 6px;               /* lebih kecil */
+  height: 6px;              /* lebih kecil */
+  background: gold;
+  border-radius: 50%;
+  top: -3px;
+  right: -3px;
+  opacity: 0;
+  transition: 0.3s;
 }
 
-/* Thumbnail */
-#image {
-  width: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  transition: transform 0.3s;
+.bookmark-btn.added::after {
+  opacity: 1;
 }
-#image:hover { transform: scale(1.02); }
 
-/* Meta & Synopsis */
+/* ===== Thumbnail ===== */
+#image { 
+  width: auto;      /* gunakan ukuran asli gambar */
+  max-width: 80%;   /* tampil lebih kecil di layar */
+  height: auto;     /* proporsional */
+  object-fit: cover; 
+  border-radius: 15px; 
+  margin-bottom: 10px; 
+  transition: transform 0.3s; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#image:hover { 
+  transform: scale(1.05); /* sedikit zoom saat hover */
+}
+/* ===== Meta & Synopsis ===== */
 .meta p, .synopsis p { margin: 8px 0; line-height: 1.6; color: #ddd; }
+body.light-mode .meta p, body.light-mode .synopsis p { color: #333; }
 .synopsis h3 { margin-bottom: 10px; color: #fff; }
+body.light-mode .synopsis h3 { color: #222; }
 
-/* Chapter Controls */
-.chapter-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.chapter-controls input {
-  flex: 1;
-  min-width: 200px;
-}
+/* ===== Chapter Controls ===== */
+.chapter-controls { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; flex-wrap: wrap; gap: 10px; }
+.chapter-controls input { flex: 1; min-width: 200px; }
 .chapter-controls button { flex-shrink: 0; }
 
-/* Chapters List */
-.chapters {
-  display: flex;
-  flex-direction: column;
-  border-radius: 15px;
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-.chapter-header, .chapter-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 15px;
-  transition: all 0.3s ease;
-}
-.chapter-header {
-  font-weight: bold;
-  background: rgba(255,255,255,0.1);
-  border-bottom: 2px solid #ff416c;
-  border-radius: 15px 15px 0 0;
-}
-.chapter-row {
-  cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.chapter-row:hover { background: rgba(255,255,255,0.08); }
+/* ===== Chapters List ===== */
+.chapters { display: flex; flex-direction: column; border-radius: 15px; max-height: 400px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.chapter-header, .chapter-row { display: flex; justify-content: space-between; padding: 12px 15px; transition: all 0.3s ease; }
+.chapter-header { font-weight: bold; background: rgba(255,255,255,0.1); border-bottom: 2px solid #ff416c; border-radius: 15px 15px 0 0; }
+.chapter-row { cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.chapter-row:hover { background: rgba(255,255,255,0.08); transform: scale(1.01); }
 .chapter-row div { flex: 1; text-align: left; }
 .chapter-row div.views, .chapter-row div.date { flex: 0.8; text-align: center; }
 .chapter-row div.no { flex: 0.5; text-align: center; }
 .highlight { background: rgba(255,65,108,0.3) !important; }
 
-/* Scrollbar */
-.chapters::-webkit-scrollbar {
-  width: 8px;
+/* ===== Scrollbar ===== */
+.chapters::-webkit-scrollbar { width: 8px; }
+.chapters::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+.chapters::-webkit-scrollbar-thumb { background: rgba(255,65,108,0.6); border-radius: 10px; }
+
+.comment-section {
+  margin: 30px auto;
+  max-width: 550px; /* kontainer sedikit lebih besar */
 }
-.chapters::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
+.comment-section h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
 }
-.chapters::-webkit-scrollbar-thumb {
-  background: rgba(255,65,108,0.6);
-  border-radius: 10px;
+#commentList {
+  max-height: 380px;
+  overflow-y: auto;
+  border-radius: 15px;
+  background: rgba(0,0,0,0.15);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scroll-behavior: smooth;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.25);
 }
 
-/* Genre Buttons */
-.genre-buttons {
-  text-align: center;
-  margin: 30px 0;
+/* Bubble komentar */
+.comment-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
-.genre-buttons button {
+.comment-bubble.self {
+  justify-content: flex-end;
+}
+.comment-bubble .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.comment-bubble .bubble {
+  max-width: 65%;
+  padding: 8px 12px;
+  border-radius: 15px;
   background: rgba(255,255,255,0.1);
   color: #fff;
-  margin: 5px;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid rgba(255,255,255,0.3);
-  transition: all 0.3s ease;
+  word-wrap: break-word;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
 }
-.genre-buttons button:hover {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  transform: translateY(-2px) scale(1.05);
+.comment-bubble.self .bubble {
+  background: linear-gradient(135deg,#ff416c,#ff4b2b);
+  color: #fff;
+}
+.comment-bubble .bubble strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+.comment-bubble .bubble span {
+  font-size: 10px;
+  color: #aaa;
+  margin-left: 4px;
 }
 
-/* Footer */
+/* Tombol edit/hapus */
+.comment-bubble button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+}
+.comment-bubble button:hover {
+  transform: scale(1.1);
+}
+
+/* Input komentar */
+.comment-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.comment-input input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 14px;
+  backdrop-filter: blur(6px);
+}
+.comment-input input::placeholder {
+  color: #ddd;
+}
+.comment-input button {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg,#ff416c,#ff4b2b);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.comment-input button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+
 .footer {
   text-align: center;
   padding: 25px 20px;
   margin-top: 50px;
+  margin-bottom: 40px;
   color: #ddd;
   font-size: 14px;
   background: rgba(255,255,255,0.05);
@@ -225,109 +254,106 @@ button:hover {
   border-radius: 15px 15px 0 0;
   box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
 }
-.footer a { color: #ff416c; margin: 0 10px; transition: all 0.3s ease; font-size: 20px; }
-.footer a:hover { color: #ff4b2b; transform: scale(1.2); }
-.footer p { margin: 5px 0; }
 
-.bottom-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(30, 60, 114, 0.95);
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
-  border-radius: 15px 15px 0 0;
-}
-
-.bottom-menu a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.bottom-menu a i {
-  font-size: 20px;
-  margin-bottom: 3px;
-}
-
-.bottom-menu a:hover {
+.footer a {
   color: #ff416c;
-  transform: scale(1.1);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 10px;
+  font-size: 20px;
 }
 
-/* Responsif */
-@media(max-width: 768px) {
+.footer a:hover {
+  color: #ff4b2b;
+  transform: scale(1.2);
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a i {
+  vertical-align: middle;
+}
+.bottom-menu { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 95%; max-width: 480px; background: rgba(30, 60, 114, 0.95); display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.35); border-radius: 20px 20px 10px 10px; }  
+.bottom-menu a { text-decoration: none; color: #fff; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: all 0.3s ease; }  
+.bottom-menu a i { font-size: 18px; }  
+.bottom-menu a:hover { color: #ff416c; transform: translateY(-2px) scale(1.05); }  
+
+/* ===== Responsif ===== */
+@media (max-width: 768px) {
   input[type="text"] { width: 80%; }
   h1 { font-size: 2rem; }
   .chapter-controls { flex-direction: column; gap: 10px; }
 }
 </style>
+</head>
 <body>
 <div class="container">
-<h1 style="text-align: center;">
-  <img 
-    src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" 
-    alt="Logo KOMIK.YYDZ" 
-    style="display: block; margin: 0 auto; width: 200px; height: auto;"
-  >
-  KOMIK.YYDZ
+<h1>
+  <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e8193fb7.png" alt="Logo KOMIKU.YYDZ" style="display: block; margin: 0 auto; width: 200px; height: auto;">
+  KOMIKU.YYDZ
 </h1>
-  <form id="searchForm">
-    <input type="text" id="query" placeholder="Masukkan nama komik..." required>
-    <button type="submit">Cari</button>
-  </form>
-  <h1 id="title">Loading...</h1>
-  <img id="image" src="" alt="Thumbnail">
+
+<form id="searchForm">
+  <input type="text" id="query" placeholder="Masukkan nama komik..." required>
+  <button type="submit">Cari</button>
+</form>
+
+<img id="image" src="" alt="Thumbnail">
+
 <div class="bookmark-container">
   <button id="bookmarkBtn" class="bookmark-btn">★ Tambahkan ke Bookmark</button>
 </div>
-  <div class="meta" id="meta"></div>
-  <div class="synopsis" id="synopsis"></div>
 
-  <div class="chapter-controls">
-    <input type="text" id="searchInput" placeholder="Cari chapter...">
-    <button id="readFirst">Baca Chapter 1</button>
-  </div>
+<div class="meta" id="meta"></div>
+<div class="synopsis" id="synopsis"></div>
 
-  <div class="chapters" id="chapters">
-    <div class="chapter-header">
-      <div class="no">No</div>
-      <div class="title">Judul Chapter</div>
-      <div class="views">Views</div>
-      <div class="date">Tanggal</div>
-    </div>
-  </div>
-
-  <div class="genre-buttons" id="genreButtons"></div>
-
-  <footer class="footer">
-    <p>© 2025 <strong>KOMIK.YYDZ</strong>. Semua hak cipta dilindungi.</p>
-    <p>
-      <a href="https://wa.me/6283872031397" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://t.me/Yudzxzy" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-      <a href="mailto:yudaaryaardhana1122@email.com" target="_blank"><i class="fas fa-envelope"></i></a>
-    </p>
-    <p>Desain & Pengembangan oleh <a href="#" target="_blank">Yudzxml</a></p>
-  </footer>
+<div class="chapter-controls">
+  <input type="text" id="searchInput" placeholder="Cari chapter...">
+  <button id="readFirst">Baca Chapter 1</button>
 </div>
 
+<div class="chapters" id="chapters">
+</div>
+<!-- ===== Komentar Live Chat ===== -->
+<div class="comment-section">
+  <h3>Komentar Pembaca</h3>
+  <div id="commentList"></div>
+  <div class="comment-input">
+    <input type="text" id="commentInput" placeholder="Tulis komentar...">
+    <button id="sendCommentBtn">Kirim</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>© 2025 <strong>KOMIKU.YYDZ</strong>. Semua hak cipta dilindungi.</p>
+  <p>
+    <a href="https://wa.me/6283872031397" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/Yudzxzy" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:yudaaryaardhana1122@email.com" target="_blank"><i class="fas fa-envelope"></i></a>
+  </p>
+<p style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;">
+  Desain & Pengembangan oleh Tim
+  <span style="color:#ff416c; font-weight:600;">Yudzxml</span>
+</p>
+</footer>
+</div>
 <!-- Bottom Menu -->
 <nav class="bottom-menu">
   <a href="index.html" title="Beranda"><i class="fas fa-home"></i><span>Beranda</span></a>
   <a href="bookmark.html" title="Bookmark"><i class="fas fa-bookmark"></i><span>Bookmark</span></a>
   <a href="akun.html" title="Akun"><i class="fas fa-user"></i><span>Akun</span></a>
+  <a href="live-chat.html" title="Cari"><i class="fas fa-comments"></i><span>Live Chat</span></a>
   <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
 </nav>
+<!-- Firebase App (Core SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<!-- Firebase Database -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script src="detail.js"></script>
 </body>
