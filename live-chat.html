@@ -182,6 +182,127 @@ button:hover { opacity: 0.85; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="live-chat.js"></script>
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBPzquGkVE0weenABUs_uAwiApfZxzco8E",
+    authDomain: "komik-yydz.firebaseapp.com",
+    databaseURL: "https://komik-yydz-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "komik-yydz",
+    storageBucket: "komik-yydz.firebasestorage.app",
+    messagingSenderId: "650701388645",
+    appId: "1:650701388645:web:19072d42dcc445bb757f8c"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+
+const chatBox = document.getElementById("chat-box");
+const chatForm = document.getElementById("chat-form");
+const messageInput = document.getElementById("message");
+const closeBtn = document.getElementById("close-btn");
+
+let currentUser = null;
+let currentRole = "User";
+
+closeBtn.addEventListener("click", () => window.location.href = "index.html");
+
+// Render chat
+function renderMessage(data){
+    if(chatBox.querySelector(`[data-key="${data.key}"]`)) return;
+    const div = document.createElement("div");
+    div.classList.add("message");
+    if(currentUser && data.uid === currentUser.uid) div.classList.add("me");
+    if(data.role && data.role.toLowerCase() === "admin") div.classList.add("admin");
+    if(data.key) div.setAttribute("data-key", data.key);
+
+    div.innerHTML = `
+        <img class="avatar" src="${data.photoURL || 'https://via.placeholder.com/36'}" alt="avatar">
+        <div class="message-content">
+            <span class="username">${data.username} <span>${data.role || "User"}</span></span>
+            <div class="bubble">${data.message}</div>
+            <div class="time">${data.time}</div>
+        </div>
+    `;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Load chat lama + user map
+async function loadChats(){
+    const chatSnap = await db.ref("chats").once("value");
+    const chats = chatSnap.val();
+    if(!chats) return chatBox.innerHTML = "";
+
+    const usersSnap = await db.ref("users").once("value");
+    const users = usersSnap.val() || {};
+    chatBox.innerHTML = "";
+
+    for(const [key, chat] of Object.entries(chats)){
+        const data = {...chat, key};
+        if(!data.role && data.uid){
+            data.role = users[data.uid]?.role || "User";
+        }
+        renderMessage(data);
+    }
+}
+
+// Auth state
+auth.onAuthStateChanged(async user => {
+    if(!user){
+        alert("Silakan login dulu.");
+        return window.location.href = "akun.html";
+    }
+
+    currentUser = user;
+    const snapshot = await db.ref("users/" + user.uid).once("value");
+    if(!snapshot.exists()){
+        await db.ref('users/' + user.uid).set({
+            name: user.displayName || "Pengguna",
+            email: user.email,
+            photoURL: user.photoURL || "",
+            role: "User",
+            lastLogin: new Date().toISOString()
+        });
+    } else {
+        currentRole = snapshot.val().role || "User";
+        await db.ref('users/' + user.uid + '/lastLogin').set(new Date().toISOString());
+    }
+
+    await loadChats();
+
+    db.ref("chats").on("child_added", async snap => {
+        const data = snap.val();
+        data.key = snap.key;
+        if(chatBox.querySelector(`[data-key="${data.key}"]`)) return;
+        if(!data.role && data.uid){
+            const userSnap = await db.ref("users/" + data.uid).once("value");
+            data.role = userSnap.exists() ? userSnap.val().role : "User";
+        }
+        renderMessage(data);
+    });
+});
+
+// Kirim chat
+chatForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    if(!currentUser) return;
+    const msg = messageInput.value.trim();
+    if(!msg) return;
+
+    const chatData = {
+        uid: currentUser.uid,
+        username: currentUser.displayName || "Pengguna",
+        role: currentRole,
+        photoURL: currentUser.photoURL || "",
+        message: msg,
+        time: new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})
+    };
+
+    const ref = await db.ref("chats").push(chatData);
+    chatData.key = ref.key;
+    renderMessage(chatData);
+    messageInput.value = "";
+});
+</script>
 </body>
 </html>

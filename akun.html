@@ -237,7 +237,192 @@ button:hover { transform: translateY(-4px) scale(1.05); box-shadow:0 14px 35px r
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="akun.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBPzquGkVE0weenABUs_uAwiApfZxzco8E",
+  authDomain: "komik-yydz.firebaseapp.com",
+  databaseURL: "https://komik-yydz-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "komik-yydz",
+  storageBucket: "komik-yydz.firebasestorage.app",
+  messagingSenderId: "650701388645",
+  appId: "1:650701388645:web:19072d42dcc445bb757f8c"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
 
+// Fungsi Upload ke GitHub CDN
+async function YudzGithubCdn(file){
+  try{
+    const res = await axios.post('https://api-upload-cyan.vercel.app/api/upload', file, {
+      headers:{ 'Content-Type':'application/octet-stream', 'x-filename': file.name }
+    });
+    return res.data.data.url || null;
+  }catch(err){
+    console.error(err);
+    alert('Upload gagal!');
+    return null;
+  }
+}
+
+// Login Google
+const provider = new firebase.auth.GoogleAuthProvider();
+document.getElementById('googleLoginBtn').addEventListener('click', ()=>{
+  auth.signInWithPopup(provider).catch(err => alert(err.message));
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', ()=>auth.signOut());
+
+// Buka halaman utama
+document.getElementById('openHomeBtn').addEventListener('click', ()=>window.location.href='index.html');
+
+// Update UI User
+async function updateUserUI(user, forcePhotoURL = null) {
+  const userInfo = document.getElementById('userInfo');
+  const loginBtn = document.getElementById('googleLoginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const openHomeBtn = document.getElementById('openHomeBtn');
+
+  if (!user) {
+    loginBtn.style.display = 'flex';
+    logoutBtn.style.display = 'none';
+    openHomeBtn.style.display = 'none';
+    userInfo.style.display = 'none';
+    return;
+  }
+
+  loginBtn.style.display = 'none';
+  logoutBtn.style.display = 'block';
+  openHomeBtn.style.display = 'block';
+  userInfo.style.display = 'flex';
+
+  // Ambil data dari Firebase Database
+  const snapshot = await db.ref('users/' + user.uid).get();
+  let data = snapshot.exists() ? snapshot.val() : null;
+
+  // Jika user pertama kali login, buat default data
+  if (!data) {
+    data = {
+      name: user.displayName || 'Pengguna',
+      email: user.email || 'Email tidak tersedia',
+      photoURL: user.photoURL || 'https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png',
+      role: 'User', // default role user
+      lastLogin: new Date().toISOString()
+    };
+    await db.ref('users/' + user.uid).set(data);
+  } else {
+    // Update last login
+    await db.ref('users/' + user.uid + '/lastLogin').set(new Date().toISOString());
+  }
+
+  const avatar = forcePhotoURL || data.photoURL || user.photoURL || 'https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png';
+  const displayName = data.name || user.displayName || 'Pengguna';
+  const email = data.email || user.email || 'Email tidak tersedia';
+  const uid = user.uid;
+  const role = user.role || data.role || 'User';
+  const lastLogin = data.lastLogin ? new Date(data.lastLogin).toLocaleString('id-ID') : new Date().toLocaleString('id-ID');
+
+  // Update UI
+  userInfo.querySelector('img').src = avatar + '?t=' + new Date().getTime();
+  userInfo.querySelector('.user-name strong').textContent = displayName;
+  userInfo.querySelector('.email-value').textContent = email;
+  userInfo.querySelector('.uid-value').textContent = uid;
+  userInfo.querySelector('.lastlogin-value').textContent = lastLogin;
+
+  // Tampilkan role di bawah status
+  let roleDiv = userInfo.querySelector('.user-role');
+  if (!roleDiv) {
+    // Jika belum ada, buat satu div khusus
+    roleDiv = document.createElement('div');
+    roleDiv.className = 'user-role';
+    userInfo.querySelector('.user-details').appendChild(roleDiv);
+  }
+const roleValueSpan = userInfo.querySelector('.role-value');
+if(roleValueSpan){
+  roleValueSpan.textContent = role;
+}
+
+  // Sembunyikan modal spinner jika ada
+  const modalSpinner = document.getElementById('modalSpinner');
+  if (modalSpinner && modalSpinner.style.display !== 'none') {
+    setTimeout(() => modalSpinner.style.display = 'none', 500);
+  }
+}
+
+// Status login
+auth.onAuthStateChanged(user => updateUserUI(user));
+
+// Update Nama & Foto Profil
+const editName = document.getElementById('editName');
+const editPhoto = document.getElementById('editPhoto');
+const saveProfile = document.getElementById('saveProfile');
+const modalSpinner = document.getElementById('modalSpinner');
+const spinnerMessage = document.getElementById('spinnerMessage');
+const closeSpinnerBtn = document.getElementById('closeSpinnerBtn');
+
+saveProfile.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if(!user) return alert('Silakan login terlebih dahulu.');
+
+  const updates = {};
+  if(editName.value.trim()) updates.displayName = editName.value.trim();
+
+  spinnerMessage.textContent = 'Memproses...';
+  closeSpinnerBtn.style.display = 'none';
+  modalSpinner.style.display = 'flex';
+  saveProfile.disabled = true;
+
+  try {
+    let newPhotoURL = null;
+    if(editPhoto.files[0]){
+      let url = await YudzGithubCdn(editPhoto.files[0]);
+      if(url){
+        newPhotoURL = url + '?t=' + new Date().getTime();
+        updates.photoURL = newPhotoURL;
+      }
+    }
+
+    await user.updateProfile(updates);
+
+    const displayName = updates.displayName || user.displayName;
+    const photoURL = updates.photoURL || user.photoURL;
+    const email = user.email;
+
+    await db.ref('users/' + user.uid).update({
+      name: displayName,
+      photoURL: photoURL,
+      email: email,
+      role: 'User',
+      lastUpdate: new Date().toISOString(),
+      lastLogin: new Date().toISOString()
+    });
+
+    // Update UI langsung pakai photo baru agar tidak ada cache
+    await updateUserUI(user, newPhotoURL);
+
+    spinnerMessage.textContent = 'Profil berhasil diperbarui!';
+
+    // Reset input
+    editName.value = '';
+    editPhoto.value = '';
+  } catch(err) {
+    console.error(err);
+    spinnerMessage.textContent = 'Gagal memperbarui profil: ' + err.message;
+  } finally {
+    saveProfile.disabled = false;
+    // Tutup modal otomatis setelah 1 detik
+    setTimeout(() => {
+      modalSpinner.style.display = 'none';
+    }, 1000);
+    closeSpinnerBtn.style.display = 'inline-block';
+  }
+});
+
+// Tombol tutup modal
+closeSpinnerBtn.addEventListener('click', () => {
+  modalSpinner.style.display = 'none';
+});
+</script>
 </body>
 </html>

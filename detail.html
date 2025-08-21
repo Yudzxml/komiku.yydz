@@ -354,7 +354,294 @@ body.light-mode .synopsis h3 { color: #222; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <!-- Firebase Database -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Firebase =====
+  const firebaseConfig = {
+    apiKey: "AIzaSyBPzquGkVE0weenABUs_uAwiApfZxzco8E",
+    authDomain: "komik-yydz.firebaseapp.com",
+    databaseURL: "https://komik-yydz-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "komik-yydz",
+    storageBucket: "komik-yydz.firebasestorage.app",
+    messagingSenderId: "650701388645",
+    appId: "1:650701388645:web:19072d42dcc445bb757f8c"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.database();
+  function makeFirebaseKey(str) {
+  return str.replace(/[.#$/\[\]]/g, '_');
+  }
+  // ===== Variabel =====
+  const params = new URLSearchParams(window.location.search);
+  const komikUrl = params.get('url');
+  const komikId = komikUrl;
+  const komikKey = makeFirebaseKey(komikId); 
+  const commentListEl = document.getElementById('commentList');
+  const commentInput = document.getElementById('commentInput');
+  const sendCommentBtn = document.getElementById('sendCommentBtn');
 
-<script src="detail.js"></script>
+  // ===== Render Komentar =====
+function renderComments() {
+  db.ref('komikComments/' + komikKey).on('value', snapshot => {
+    commentListEl.innerHTML = '';
+    const currentUser = firebase.auth().currentUser;
+
+    snapshot.forEach(child => {
+      const c = child.val();
+      const key = child.key;
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.classList.add('comment-bubble');
+      const isSelf = currentUser && currentUser.displayName === c.user;
+      if(isSelf) bubbleDiv.classList.add('self');
+
+      if(!isSelf){
+        const avatar = document.createElement('img');
+        avatar.className = 'avatar';
+        avatar.src = c.photoURL || 'https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/554829fc.png';
+        avatar.alt = c.user;
+        bubbleDiv.appendChild(avatar);
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = `
+        <strong>${c.user}</strong>
+        <span>(${new Date(c.timestamp).toLocaleString('id-ID')})</span>
+        <div class="comment-text">${c.text}</div>
+      `;
+      bubbleDiv.appendChild(bubble);
+
+      if(isSelf){
+        const actionsDiv = document.createElement('div');
+        actionsDiv.style.display = 'flex';
+        actionsDiv.style.gap = '4px';
+        actionsDiv.style.marginLeft = '8px';
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = '✏️';
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '🗑️';
+        actionsDiv.appendChild(editBtn);
+        actionsDiv.appendChild(deleteBtn);
+        bubbleDiv.appendChild(actionsDiv);
+
+        editBtn.addEventListener('click', () => {
+          const commentTextEl = bubble.querySelector('.comment-text');
+          const currentText = commentTextEl.textContent;
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = currentText;
+          input.style.width = '100%';
+          input.style.padding = '4px';
+          commentTextEl.replaceWith(input);
+          input.focus();
+          input.addEventListener('blur', async () => {
+            const newText = input.value.trim();
+            if(newText && newText !== currentText){
+              await db.ref('komikComments/' + komikKey + '/' + key).update({text: newText});
+            }
+            input.replaceWith(commentTextEl);
+            commentTextEl.textContent = newText || currentText;
+          });
+          input.addEventListener('keydown', e => { if(e.key==='Enter') input.blur(); });
+        });
+
+        deleteBtn.addEventListener('click', () => {
+          if(confirm('Yakin ingin menghapus komentar ini?')){
+            db.ref('komikComments/' + komikKey + '/' + key).remove();
+          }
+        });
+      }
+
+      commentListEl.appendChild(bubbleDiv);
+    });
+
+    commentListEl.scrollTop = commentListEl.scrollHeight;
+  });
+}
+renderComments();
+
+
+// ===== Tombol kirim komentar =====
+sendCommentBtn.addEventListener('click', async () => {
+  const user = firebase.auth().currentUser;
+  const text = commentInput.value.trim();
+  
+  if(!text) return; 
+  if(!user) {
+    alert('Silakan login terlebih dahulu.');
+    return;
+  }
+
+  await db.ref('komikComments/' + komikKey).push({
+    user: user.displayName,
+    text: text,
+    photoURL: user.photoURL,
+    timestamp: Date.now()
+  });
+  
+  commentInput.value = '';
+});
+
+
+firebase.auth().onAuthStateChanged(user => {
+  komikUser = user || null;
+  renderComments(); 
+});
+
+
+  // ===== Bookmark =====
+  const chaptersContainer = document.getElementById('chapters');
+  const searchInput = document.getElementById('searchInput');
+  const readFirstBtn = document.getElementById('readFirst');
+  const imageEl = document.getElementById('image');
+  const searchForm = document.getElementById('searchForm');
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  const bookmarkKey = 'komikBookmark';
+  let komikTitle = '';
+  let chaptersList = [];
+  let lastOpenedChapter = null;
+  let lastThumbnail = null;
+  const lastSessionKey = `lastChapter_${komikUrl}`;
+  const lastThumbnailKey = `lastThumbnail_${komikUrl}`;
+
+  if(localStorage.getItem(lastSessionKey)) lastOpenedChapter = JSON.parse(localStorage.getItem(lastSessionKey));
+  if(localStorage.getItem(lastThumbnailKey)) { lastThumbnail = localStorage.getItem(lastThumbnailKey); imageEl.src = lastThumbnail; }
+
+  // ===== Fetch Detail =====
+  async function fetchDetail() {
+    if(!komikUrl){
+      alert('❌ Tidak ada komik yang dipilih.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://api-yudzxzy.vercel.app/api/search/komiku?action=detail&url=${encodeURIComponent(komikUrl)}`);
+      const data = await res.json();
+
+      if(!data.status || !data.data){
+        alert('❌ Data komik tidak ditemukan.');
+        return;
+      }
+
+      const meta = data.data.info;
+      chaptersList = data.data.chapters.slice().reverse();
+      window.sessionStorage.setItem('chapterList', JSON.stringify(chaptersList));
+
+      // Thumbnail
+      imageEl.src = data.data.image;
+      localStorage.setItem(lastThumbnailKey, data.data.image);
+       komikTitle = data.data.title;
+      // Meta Info
+      document.getElementById('meta').innerHTML = `
+        <div style="text-align:center; margin-bottom:20px;">
+          <p><strong>Nama Komik:</strong><br>${data.data.title}</p>
+          <p><strong>Jenis:</strong><br>${meta.jenis}</p>
+          <p><strong>Konsep:</strong><br>${meta.konsep}</p>
+          <p><strong>Pengarang:</strong><br>${meta.pengarang}</p>
+          <p><strong>Status:</strong><br>${meta.status || "N/A"}</p>
+          <p><strong>Umur Pembaca:</strong><br>${meta.umur_pembaca}</p>
+          <p><strong>Cara Baca:</strong><br>${meta.cara_baca}</p>
+          <p><strong>Genre:</strong><br>${meta.genres.join(', ')}</p>
+        </div>
+      `;
+
+      // Sinopsis
+      document.getElementById('synopsis').innerHTML = `
+        <h3 style="text-align:center; margin-bottom:10px;">Sinopsis:</h3>
+        <p style="text-align:center;">${data.data.sinopsis_lengkap}</p>
+      `;
+
+      renderChapters(chaptersList);
+
+      // Update tombol bookmark
+      updateBookmarkBtn(komikTitle, data.data.image);
+
+    } catch(err) {
+      console.error(err);
+      alert('⚠️ Terjadi kesalahan saat mengambil data.');
+    }
+  }
+
+  // ===== Bookmark Logic =====
+  function updateBookmarkBtn(komikTitle, thumb) {
+    const bookmarks = JSON.parse(localStorage.getItem(bookmarkKey)) || {};
+    const exists = bookmarks.hasOwnProperty(komikTitle);
+    
+    if (exists) {
+        bookmarkBtn.innerText = '★ Sudah di Bookmark';
+        bookmarkBtn.style.color = 'gold';
+        bookmarkBtn.classList.add('added');
+    } else {
+        bookmarkBtn.innerText = '★ Tambahkan ke Bookmark';
+        bookmarkBtn.style.color = '#fff';
+        bookmarkBtn.classList.remove('added');
+    }
+}
+
+bookmarkBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    let bookmarks = JSON.parse(localStorage.getItem(bookmarkKey)) || {};
+
+    if (bookmarks.hasOwnProperty(komikTitle)) {
+        // hapus bookmark
+        delete bookmarks[komikTitle];
+    } else {
+        // tambah bookmark
+        bookmarks[komikTitle] = {
+            title: komikTitle,
+            thumb: imageEl.src,
+            url: komikUrl,
+            date: Date.now()
+        };
+    }
+
+    localStorage.setItem(bookmarkKey, JSON.stringify(bookmarks));
+    updateBookmarkBtn(komikTitle, imageEl.src);
+});
+
+  // ===== Render Chapters =====
+  function renderChapters(list){
+    chaptersContainer.querySelectorAll('.chapter-row').forEach(r => r.remove());
+    list.forEach((ch,i) => {
+      const row = document.createElement('div');
+      row.className = 'chapter-row';
+      row.innerHTML = `
+        <div class="title" title="${ch.title}">${ch.title}</div>
+        <div class="views">${ch.views}</div>
+        <div class="date">${ch.date}</div>
+      `;
+      row.addEventListener('click', () => {
+        window.open(`chapter.html?url=${encodeURIComponent(ch.link)}`, '_blank');
+        localStorage.setItem(lastSessionKey, JSON.stringify({index:i,link:ch.link}));
+      });
+      if(lastOpenedChapter && lastOpenedChapter.link === ch.link){
+        row.classList.add('highlight');
+        setTimeout(() => row.scrollIntoView({behavior:'smooth', block:'center'}), 50);
+      }
+      chaptersContainer.appendChild(row);
+    });
+  }
+
+  // ===== Search Chapter =====
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    renderChapters(chaptersList.filter(ch => ch.title.toLowerCase().includes(query)));
+  });
+
+  // ===== Read First Chapter =====
+  readFirstBtn.addEventListener('click', () => {
+    if(chaptersList.length > 0){
+      window.open(`chapter.html?url=${encodeURIComponent(chaptersList[0].link)}`, '_blank');
+      localStorage.setItem(lastSessionKey, JSON.stringify({index:0,link:chaptersList[0].link}));
+    }
+  });
+
+  // ===== Fetch Detail =====
+  fetchDetail();
+
+});
+</script>
 </body>
 </html>

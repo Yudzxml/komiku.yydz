@@ -348,7 +348,91 @@ button:hover {
   <a href="search.html" title="Cari"><i class="fas fa-search"></i><span>Cari</span></a>
 </nav>
 
-<script src="tipe.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  let tipe = params.get("tipe") || "manhwa"; // default manhwa
+  let page = parseInt(params.get("page")) || 1;
+
+  const headerTitle = document.getElementById("headerTitle");
+  if (tipe === "manhwa") headerTitle.innerText = "Daftar Manhwa";
+  else if (tipe === "manga") headerTitle.innerText = "Daftar Manga";
+  else if (tipe === "manhua") headerTitle.innerText = "Daftar Manhua";
+  else headerTitle.innerText = "Daftar Komik";
+
+  const listContainer = document.getElementById("comicList");
+  const pageNumberSpan = document.getElementById("pageNumber");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  function loadPage() {
+    const endpoint = `https://api-yudzxzy.vercel.app/api/search/komiku?action=getkomikulist&tipe=${encodeURIComponent(tipe)}&page=${page}`;
+    pageNumberSpan.innerText = page;
+
+    listContainer.innerHTML = "<p class='error' style='grid-column:1/-1;'>Memuat data...</p>";
+
+    fetch(endpoint)
+      .then(res => res.json())
+      .then(data => {
+        listContainer.innerHTML = "";
+
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          listContainer.innerHTML =
+            "<p class='error' style='grid-column:1/-1;'>Tidak ada komik ditemukan.</p>";
+          nextBtn.disabled = true; // Disable Next jika data kosong
+          prevBtn.disabled = page === 1;
+          return;
+        }
+
+        data.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "komik-card";
+          card.innerHTML = `
+            <img src="${item.image}" alt="${item.title}" onclick="window.location.href='detail.html?url=${encodeURIComponent(item.url)}'">
+            <div class="info">
+              <h2>${item.title}</h2>
+              <p>${item.readers} | ${item.lastUpdate}</p>
+              <p>${item.description}</p>
+              <a href="chapter.html?url=${encodeURIComponent(item.chapterLatest.url)}" target="_blank">${item.chapterLatest.title}</a>
+            </div>
+          `;
+          listContainer.appendChild(card);
+        });
+
+        // Enable/disable tombol
+        prevBtn.disabled = page === 1;
+        nextBtn.disabled = data.length === 0; // bisa diatur lebih pintar kalau API kasih total halaman
+      })
+      .catch(err => {
+        console.error(err);
+        listContainer.innerHTML =
+          "<p class='error' style='grid-column:1/-1;'>Gagal memuat data.</p>";
+      });
+  }
+
+  // Event tombol pagination
+  prevBtn.addEventListener("click", () => {
+    if (page > 1) {
+      page--;
+      updateURL();
+      loadPage();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    page++;
+    updateURL();
+    loadPage();
+  });
+
+  function updateURL() {
+    const newURL = `tipe.html?tipe=${encodeURIComponent(tipe)}&page=${page}`;
+    window.history.replaceState(null, "", newURL);
+  }
+
+  loadPage();
+});
+</script>
 
 </body>
 </html>
